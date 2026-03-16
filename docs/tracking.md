@@ -561,6 +561,20 @@ sqlite3 ~/.local/share/rtk/tracking.db \
   "ALTER TABLE commands ADD COLUMN exec_time_ms INTEGER DEFAULT 0"
 ```
 
+### No statistics recorded in Claude Code sandbox
+
+When running Claude Code in sandbox mode, RTK commands are blocked by default, which prevents tracking data from being written to the SQLite database. To allow RTK to execute and record statistics, exclude it from the sandbox restrictions in your Claude Code settings:
+
+```json
+{
+  "sandbox": {
+    "excludedCommands": ["rtk:*"]
+  }
+}
+```
+
+This whitelists all RTK commands (`rtk:*`) so they can run normally and persist token savings to the database.
+
 ### Incorrect token counts
 
 Token estimation uses `~4 chars = 1 token`. This is approximate. For precise counts, integrate with your LLM's tokenizer API.
